@@ -5,3 +5,4 @@ const initiCanvas = (id)=>{
         Selection: false,
     });
 }
+const canvas = initiCanvas("canvas");
