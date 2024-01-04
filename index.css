@@ -1,0 +1,16 @@
+#videoEditor {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+}
+
+#canvas {
+    border: 1px solid #000;
+    display: block;
+    margin: 20px auto;
+}
+
+button {
+    margin: 10px;
+    padding: 10px;
+}
