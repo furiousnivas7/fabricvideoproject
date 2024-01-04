@@ -6,7 +6,8 @@ const initiCanvas = (id)=>{
     });
 }
 
-
+const canvas = initiCanvas("initiCanvas");
+let videoElement = null;
 // Function to handle video input
 document.getElementById("videoInput").addEventListener("change", function (e) {
     const videoFile = e.target.files[0];
@@ -56,5 +57,3 @@ function renderVideo() {
     }
 }
 
-const canvas = initiCanvas("initiCanvas");
-let videoElement = null;
