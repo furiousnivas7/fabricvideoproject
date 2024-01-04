@@ -1,16 +1,7 @@
-document.getElementById('importVideo').addEventListener('click', function() {
-    // Code to import video
-    console.log('Import Video clicked');
-});
-
-document.getElementById('toggleDrawing').addEventListener('click', function() {
-    // Code to toggle drawing
-    console.log('Toggle Drawing clicked');
-});
-
-document.getElementById('togglePan').addEventListener('click', function() {
-    // Code to toggle pan
-    console.log('Toggle Pan clicked');
-});
-
-// Add more event listeners for other buttons
+const initiCanvas = (id)=>{
+    return new fabric.Canvas(id,{
+        width:720,
+        height:540,
+        Selection: false,
+    });
+}
