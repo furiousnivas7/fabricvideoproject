@@ -1,10 +1,11 @@
 const initiCanvas = (id)=>{
     return new fabric.Canvas(id,{
-        width:720,
-        height:540,
+        width:600,
+        height:1000,
         Selection: false,
     });
 }
+
 
 // Function to handle video input
 document.getElementById("videoInput").addEventListener("change", function (e) {
@@ -12,7 +13,7 @@ document.getElementById("videoInput").addEventListener("change", function (e) {
 
     if (videoFile) {
         // Create a video element and load the selected video file
-        const videoElement = document.createElement("video");
+        videoElement = document.createElement("video");
         videoElement.src = URL.createObjectURL(videoFile);
 
         // Wait for the video to load
@@ -30,10 +31,30 @@ document.getElementById("videoInput").addEventListener("change", function (e) {
             });
 
             canvas.add(videoObject);
-        });
+            
+            // Start playing the video
+            videoElement.play();
 
-        // Start playing the video
-        videoElement.play();
+            // Call the renderVideo function to continuously update the canvas
+            renderVideo();
+        });
     }
 });
-const canvas = initiCanvas("canvas");
+
+// Function to render the video on the canvas
+function renderVideo() {
+    if (videoElement && !videoElement.paused && !videoElement.ended) {
+        const videoObject = canvas.item(0); // Assuming the video is the first item on the canvas
+        if (videoObject) {
+            // Clear the canvas and redraw the video frame
+            canvas.clear();
+            canvas.add(videoObject);
+
+            // Request the next frame
+            requestAnimationFrame(renderVideo);
+        }
+    }
+}
+
+const canvas = initiCanvas("initiCanvas");
+let videoElement = null;
