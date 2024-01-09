@@ -8,15 +8,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const file = e.target.files[0];
         const url = URL.createObjectURL(file);
 
-        // Create a native video element
         const videoElement = document.createElement('video');
         videoElement.src = url;
         videoElement.crossOrigin = 'anonymous';
         videoElement.loop = true;
-        videoElement.muted = true; // Add this line if autoplay without interaction is needed
+        videoElement.muted = true; 
 
-        // When the metadata is loaded, create the Fabric image object
+        videoElement.addEventListener('error', function(e) {
+            console.error('Video loading error:', e);
+        });
+
         videoElement.addEventListener('loadedmetadata', function() {
+            console.log('Video metadata loaded. Width:', videoElement.videoWidth, 'Height:', videoElement.videoHeight);
+
             const fabricVideo = new fabric.Image(videoElement, {
                 scaleX: canvas.width / videoElement.videoWidth,
                 scaleY: canvas.height / videoElement.videoHeight,
@@ -25,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
             canvas.add(fabricVideo);
             videoElement.play();
 
-            // Update the canvas at the video frame rate
             const render = () => {
                 canvas.renderAll();
                 fabric.util.requestAnimFrame(render);
