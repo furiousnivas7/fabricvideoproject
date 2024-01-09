@@ -4,28 +4,21 @@
     text-align: center;
 }
 
-#initiCanvas {
+#canvas {
     border: 1px solid #000;
     display: block;
-    margin: 10px;
+    margin: 10px auto;
     box-sizing: content-box;
-
 }
+
 .button-container {
-    display: flex; /* Use flexbox to arrange buttons horizontally */
-    justify-content: left; /* Center-align buttons horizontally */
-    align-items:flex-start; /* Center-align buttons vertically */
+    text-align: center;
+    margin-top: 10px;
 }
 
-button {
-    margin: 10px;
-    padding: 10px;
-}
 input[type="file"] {
-    appearance: none;
-    padding: 10px 15px;
+    padding: 10px;
     border: 1px solid #000;
     background-color: #f2f2f2;
     cursor: pointer;
-    margin: 10px;
 }

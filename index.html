@@ -1,25 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Simple Video Editor</title>
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <meta charset="UTF-8">
+    <title>Video on Fabric.js Canvas</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div id="videoEditor">
-        <canvas id="initiCanvas"></canvas>
+        <canvas id="canvas"></canvas>
         <div class="button-container">
             <input type="file" id="videoInput" accept="video/*">
-            <button id="toggleDrawing">Toggle Drawing</button>
-            <button id="togglePan">Toggle Pan</button>
-            <!-- Add more buttons for other functionalities -->
         </div>
     </div>
 
-
-    <script src="/lib/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
     <script src="index.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script> -->
-
-    
 </body>
 </html>

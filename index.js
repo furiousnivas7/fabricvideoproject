@@ -1,56 +1,25 @@
-const initiCanvas = (id) => {
-    return new fabric.Canvas(id, {
-        width: 600,
-        height: 400,
-        selection: false,
+document.addEventListener('DOMContentLoaded', function () {
+    const canvas = new fabric.Canvas('canvas', {
+        width: 800,
+        height: 450
     });
-};
 
-const canvas = initiCanvas("initiCanvas");
-let videoElement = null;
-let videoObject = null;
+    document.getElementById('videoInput').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const url = URL.createObjectURL(file);
 
-// Function to handle video input
-document.getElementById("videoInput").addEventListener("change", function (e) {
-    const videoFile = e.target.files[0];
-
-    if (videoFile) {
-        videoElement = document.createElement("video");
-        videoElement.src = URL.createObjectURL(videoFile);
-        videoElement.muted = true; // Mute the video
-        videoElement.autoplay = true; // Autoplay when loaded
-        videoElement.crossOrigin = "anonymous";
-
-
-        videoElement.addEventListener("loadedmetadata", function () {
-            const videoWidth = videoElement.videoWidth;
-            const videoHeight = videoElement.videoHeight;
-
-            videoObject = new fabric.Image(videoElement, {
+        fabric.Image.fromURL(url, function (oImg) {
+            oImg.set({
                 left: 0,
                 top: 0,
-                width: videoWidth,
-                height: videoHeight,
-                selectable: false,
+                angle: 0,
+                selectable: false
             });
-
-            canvas.add(videoObject);
-            videoElement.play();
-            renderVideo();
+            oImg.scaleToWidth(canvas.width);
+            canvas.add(oImg);
+            oImg.getElement().play();
+        }, {
+            crossOrigin: 'anonymous'
         });
-
-        videoElement.addEventListener("error", function () {
-            console.error("Error loading video");
-        });
-    }
+    });
 });
-
-function renderVideo() {
-    if (videoElement && !videoElement.paused && !videoElement.ended) {
-        if (videoObject) {
-            videoObject.setElement(videoElement);
-        }
-        canvas.renderAll();
-        requestAnimationFrame(renderVideo);
-    }
-}
