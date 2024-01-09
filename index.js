@@ -19,6 +19,8 @@ document.getElementById("videoInput").addEventListener("change", function (e) {
         videoElement.src = URL.createObjectURL(videoFile);
         videoElement.muted = true; // Mute the video
         videoElement.autoplay = true; // Autoplay when loaded
+        videoElement.crossOrigin = "anonymous";
+
 
         videoElement.addEventListener("loadedmetadata", function () {
             const videoWidth = videoElement.videoWidth;
@@ -43,9 +45,11 @@ document.getElementById("videoInput").addEventListener("change", function (e) {
     }
 });
 
-// Function to render the video on the canvas
 function renderVideo() {
     if (videoElement && !videoElement.paused && !videoElement.ended) {
+        if (videoObject) {
+            videoObject.setElement(videoElement);
+        }
         canvas.renderAll();
         requestAnimationFrame(renderVideo);
     }
