@@ -71,15 +71,15 @@ document.getElementById('toggleMute').addEventListener('click', function() {
 
 
 // Function to add text to the canvas
-function addText() {
-    var text = new fabric.Textbox('Your Text Here', {
-        left: 200,
-        top: 200,
-        fill: '#000', // Text color
-        fontSize: 24, // Font size
-        fontFamily: 'Arial', // Font family
-    });
-    console.log("text")
+// function addText() {
+//     var text = new fabric.Textbox('Your Text Here', {
+//         left: 200,
+//         top: 200,
+//         fill: '#000', // Text color
+//         fontSize: 24, // Font size
+//         fontFamily: 'Arial', // Font family
+//     });
+//     console.log("text")
 
-    canvas.add(text);
-}
+//     canvas.add(text);
+// }
