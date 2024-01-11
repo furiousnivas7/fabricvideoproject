@@ -1,24 +1,25 @@
-/* #videoEditor {
-    max-width: 800px;
-    margin: auto;
-    text-align: center;
+canvas {
+    border: 1px solid #333; /* Customize canvas border */
+    background-color: #f0f0f0; /* Customize canvas background color */
+    margin: 20px; /* Add margin to canvas */
 }
 
-#canvas {
-    border: 1px solid #000;
-    display: block;
-    margin: 10px auto;
-    box-sizing: content-box;
+button {
+    margin: 10px; /* Add margin to buttons */
+    padding: 5px 10px; /* Add padding to buttons */
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none; /* Remove button border */
+    cursor: pointer; /* Change cursor on hover */
+    border-radius: 5px; /* Add border radius to buttons */
 }
 
-.button-container {
-    text-align: center;
-    margin-top: 10px;
+button:hover {
+    background-color: #0056b3; /* Button background color on hover */
 }
 
 input[type="file"] {
-    padding: 10px;
-    border: 1px solid #000;
-    background-color: #f2f2f2;
-    cursor: pointer;
-} */
+    margin: 10px; /* Add margin to file input */
+}
+
+/* Additional CSS styles for specific elements can be added here */
