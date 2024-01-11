@@ -79,6 +79,7 @@ function addText() {
         fontSize: 24, // Font size
         fontFamily: 'Arial', // Font family
     });
+    console.log("text")
 
     canvas.add(text);
 }
