@@ -1,6 +1,7 @@
 var canvas = new fabric.Canvas('c');
 var currentVideo = null;
 var isPlaying = false;
+var isVideoLoaded = false;
 
 function addVideo(url) {
     var videoEl = document.createElement('video');
@@ -10,9 +11,11 @@ function addVideo(url) {
     videoEl.muted = true;
     videoEl.width = canvas.width; // Set to match canvas width
     videoEl.height = canvas.height; // Set to match canvas height
-    videoEl.play();
 
     videoEl.onloadeddata = function() {
+        console.log("Video data loaded");
+        videoEl.play(); // Play the video after data is loaded
+
         var fabricVideo = new fabric.Image(videoEl, {
             left: 100,
             top: 100,
@@ -27,11 +30,16 @@ function addVideo(url) {
             canvas.renderAll();
             fabric.util.requestAnimFrame(render);
         });
+
         document.getElementById('playPauseButton').disabled = false;
         document.getElementById('toggleLoop').disabled = false;
         document.getElementById('toggleMute').disabled = false;
     };
+
+    // Append the video element to the document to load video data
+    document.body.appendChild(videoEl);
 }
+
 
 
 
