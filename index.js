@@ -1,6 +1,6 @@
 var canvas = new fabric.Canvas('c');
 var currentVideo = null;
-var isPlaying = false;
+var isPlaying = true;
 var isVideoLoaded = false;
 
 function addVideo(url) {
