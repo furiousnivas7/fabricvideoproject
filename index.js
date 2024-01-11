@@ -27,6 +27,9 @@ function addVideo(url) {
             canvas.renderAll();
             fabric.util.requestAnimFrame(render);
         });
+        document.getElementById('playPauseButton').disabled = false;
+        document.getElementById('toggleLoop').disabled = false;
+        document.getElementById('toggleMute').disabled = false;
     };
 }
 
