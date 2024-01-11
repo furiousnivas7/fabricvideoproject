@@ -1,71 +1,68 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const canvas = new fabric.Canvas('canvas', {
-        width: 800,
-        height: 450
-    });
+var canvas = new fabric.Canvas('c');
+var currentVideo = null;
+var isPlaying = false;
 
-    document.getElementById('videoInput').addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        const url = URL.createObjectURL(file);
+function addVideo(url) {
+    var videoEl = document.createElement('video');
+    videoEl.src = url;
+    videoEl.crossOrigin = "anonymous";
+    videoEl.loop = true;
+    videoEl.muted = true;
+    videoEl.width = canvas.width; // Set to match canvas width
+    videoEl.height = canvas.height; // Set to match canvas height
+    videoEl.play();
 
-        const videoElement = document.createElement('video');
-        videoElement.src = url;
-        videoElement.crossOrigin = 'anonymous';
-        videoElement.loop = true;
-        videoElement.muted = true; 
-
-        videoElement.addEventListener('error', function(e) {
-            console.error('Video loading error:', e);
+    videoEl.onloadeddata = function() {
+        var fabricVideo = new fabric.Image(videoEl, {
+            left: 100,
+            top: 100,
+            angle: 0,
+            objectCaching: false
         });
 
-        videoElement.addEventListener('loadedmetadata', function() {
-            console.log('Video metadata loaded. Width:', videoElement.videoWidth, 'Height:', videoElement.videoHeight);
+        canvas.add(fabricVideo);
+        currentVideo = fabricVideo;
 
-            const fabricVideo = new fabric.Image(videoElement, {
-                scaleX: canvas.width / videoElement.videoWidth,
-                scaleY: canvas.height / videoElement.videoHeight,
-            });
-
-            document.addEventListener('DOMContentLoaded', function () {
-                const canvas = new fabric.Canvas('canvas', {
-                    width: 800,
-                    height: 450
-                });
-            
-                document.getElementById('videoInput').addEventListener('change', function (e) {
-                    const file = e.target.files[0];
-                    const url = URL.createObjectURL(file);
-            
-                    const videoElement = document.createElement('video');
-                    videoElement.src = url;
-                    videoElement.crossOrigin = 'anonymous';
-                    videoElement.loop = true;
-                    videoElement.muted = true; 
-            
-                    videoElement.addEventListener('error', function(e) {
-                        console.error('Video loading error:', e);
-                    });
-            
-                    videoElement.addEventListener('loadedmetadata', function() {
-                        console.log('Video metadata loaded. Width:', videoElement.videoWidth, 'Height:', videoElement.videoHeight);
-            
-                        const fabricVideo = new fabric.Image(videoElement, {
-                            scaleX: canvas.width / videoElement.videoWidth,
-                            scaleY: canvas.height / videoElement.videoHeight,
-                        });
-            
-                        canvas.add(fabricVideo);
-                        videoElement.play();
-            
-                        const render = () => {
-                            canvas.renderAll();
-                            fabric.util.requestAnimFrame(render);
-                        };
-                        fabric.util.requestAnimFrame(render);
-                    });
-                });
-            });
-            
+        fabric.util.requestAnimFrame(function render() {
+            canvas.renderAll();
+            fabric.util.requestAnimFrame(render);
         });
-    });
+    };
+}
+
+document.getElementById('videoUpload').addEventListener('change', function(e) {
+    if (e.target.files && e.target.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            addVideo(e.target.result);
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    }
+});
+
+document.getElementById('playPauseButton').addEventListener('click', function() {
+    if (currentVideo && currentVideo.getElement()) {
+        var videoEl = currentVideo.getElement();
+        if (isPlaying) {
+            videoEl.pause();
+            this.textContent = 'Play';
+        } else {
+            videoEl.play();
+            this.textContent = 'Pause';
+        }
+        isPlaying = !isPlaying;
+    }
+});
+
+document.getElementById('toggleLoop').addEventListener('click', function() {
+    if (currentVideo && currentVideo.getElement()) {
+        currentVideo.getElement().loop = !currentVideo.getElement().loop;
+    }
+});
+
+document.getElementById('toggleMute').addEventListener('click', function() {
+    if (currentVideo && currentVideo.getElement()) {
+        var videoEl = currentVideo.getElement();
+        videoEl.muted = !videoEl.muted;
+    }
 });

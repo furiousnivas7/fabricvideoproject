@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Video on Fabric.js Canvas</title>
-    <link rel="stylesheet" href="index.css">
+    <title>Fabric.js Video Control Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+    <style>
+        canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
-    <div id="videoEditor">
-        <canvas id="canvas"></canvas>
-        <div class="button-container">
-            <input type="file" id="videoInput" accept="video/*">
-        </div>
-    </div>
-
-    <script src="lib/fabric.min.js"></script>
-    <script src="index.js"></script>
+    <input type="file" id="videoUpload" accept="video/*">
+    <button id="playPauseButton">Play</button>
+    <button id="toggleLoop">Toggle Loop</button>
+    <button id="toggleMute">Toggle Mute</button>
+    <br>
+    <canvas id="c" width="800" height="600"></canvas>
+    <script src="script.js"></script>
 </body>
 </html>
