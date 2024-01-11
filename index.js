@@ -87,5 +87,5 @@ addButton.textContent = 'Add Text';
 addButton.addEventListener('click', addText);
 document.body.appendChild(addButton);
 // Add a click event listener to the "Add Text" button
-document.getElementById('addTextButton').addEventListener('click', addText);
+// document.getElementById('addTextButton').addEventListener('click', addText);
 
