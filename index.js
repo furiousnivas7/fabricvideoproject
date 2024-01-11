@@ -30,18 +30,7 @@ function addVideo(url) {
     };
 }
 
-// Function to add text to the canvas
-function addText() {
-    var text = new fabric.Textbox('Your Text Here', {
-        left: 200,
-        top: 200,
-        fill: '#000', // Text color
-        fontSize: 24, // Font size
-        fontFamily: 'Arial', // Font family
-    });
 
-    canvas.add(text);
-}
 
 document.getElementById('videoUpload').addEventListener('change', function(e) {
     if (e.target.files && e.target.files[0]) {
@@ -81,11 +70,15 @@ document.getElementById('toggleMute').addEventListener('click', function() {
 });
 
 
-// Add a button to trigger the addText function
-var addButton = document.createElement('button');
-addButton.textContent = 'Add Text';
-addButton.addEventListener('click', addText);
-document.body.appendChild(addButton);
-// Add a click event listener to the "Add Text" button
-// document.getElementById('addTextButton').addEventListener('click', addText);
+// Function to add text to the canvas
+function addText() {
+    var text = new fabric.Textbox('Your Text Here', {
+        left: 200,
+        top: 200,
+        fill: '#000', // Text color
+        fontSize: 24, // Font size
+        fontFamily: 'Arial', // Font family
+    });
 
+    canvas.add(text);
+}
