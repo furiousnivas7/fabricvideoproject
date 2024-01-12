@@ -20,7 +20,8 @@ function addVideo(url) {
             left: 100,
             top: 100,
             angle: 0,
-            objectCaching: false
+            objectCaching: false,
+            canvas: canvas
         });
 
         canvas.add(fabricVideo);
