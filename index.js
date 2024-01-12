@@ -8,16 +8,15 @@ function addVideo(url) {
     videoEl.crossOrigin = "anonymous";
     videoEl.loop = true;
     videoEl.muted = true;
-    videoEl.width = canvas.width; // Set to match canvas width
-    videoEl.height = canvas.height; // Set to match canvas height
-    videoEl.play();
 
-    videoEl.onloadeddata = function() {
+    videoEl.onloadedmetadata = function () {
         var fabricVideo = new fabric.Image(videoEl, {
             left: 100,
             top: 100,
             angle: 0,
-            objectCaching: false
+            objectCaching: false,
+            scaleX: canvas.width / videoEl.videoWidth, // Scale video to match canvas width
+            scaleY: canvas.height / videoEl.videoHeight // Scale video to match canvas height
         });
 
         canvas.add(fabricVideo);
@@ -28,7 +27,11 @@ function addVideo(url) {
             fabric.util.requestAnimFrame(render);
         });
     };
+
+    // Append the video element to the document to load video data
+    document.body.appendChild(videoEl);
 }
+
 
 document.getElementById('videoUpload').addEventListener('change', function(e) {
     if (e.target.files && e.target.files[0]) {
