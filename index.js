@@ -1,6 +1,6 @@
 var canvas = new fabric.Canvas('c');
 var video1El = document.getElementById('video1');
-var webcamEl = document.getElementById('webcam');
+// var webcamEl = document.getElementById('webcam');
 
 var video1 = new fabric.Image(video1El, {
   left: 200,
