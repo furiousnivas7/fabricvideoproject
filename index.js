@@ -1,5 +1,6 @@
 var canvas = new fabric.Canvas('c');
 var currentVideo = null;
+var isPlaying = true; // Declare and initialize isPlaying variable
 
 function addVideo(url) {
     var videoEl = document.createElement('video');
