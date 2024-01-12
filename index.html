@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Fabric.js Video Control Example</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="index.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-
+    <title>Video and Webcam Canvas</title>
 </head>
 <body>
-    <input type="file" id="videoUpload" accept="video/*">
-    <button id="playPauseButton">Play</button>
-    <button id="toggleLoop">Toggle Loop</button>
-    <button id="toggleMute">Toggle Mute</button>
-    <button id="addTextButton">Add Text</button> 
-
-    <br>
     <canvas id="c" width="800" height="600"></canvas>
+    
+    <!-- Video element for 'video1' -->
+    <video id="video1" src="C:\Users\HP\OneDrive\Documents\git\fabricvideoproject\Inside Google&#039;s Massive Headquarters.mp4" controls style="display:flex;"></video>
+
+    <!-- Video element for webcam -->
+    <video id="webcam" autoplay playsinline style="display: none;"></video>
+
+    <script src="lib/fabric.min.js"></script>
     <script src="index.js"></script>
 </body>
 </html>

@@ -1,71 +1,65 @@
 var canvas = new fabric.Canvas('c');
-var currentVideo = null;
-var isPlaying = true; // Declare and initialize isPlaying variable
+var video1El = document.getElementById('video1');
+var webcamEl = document.getElementById('webcam');
 
-function addVideo(url) {
-    var videoEl = document.createElement('video');
-    videoEl.src = url;
-    videoEl.crossOrigin = "anonymous";
-    videoEl.loop = true;
-    videoEl.muted = true;
+var video1 = new fabric.Image(video1El, {
+  left: 200,
+  top: 300,
+  angle: -15,
+  originX: 'center',
+  originY: 'center',
+  objectCaching: false,
+});
 
-    videoEl.onloadedmetadata = function () {
-        var fabricVideo = new fabric.Image(videoEl, {
-            left: 100,
-            top: 100,
-            angle: 0,
-            objectCaching: false,
-            scaleX: canvas.width / videoEl.videoWidth, // Scale video to match canvas width
-            scaleY: canvas.height / videoEl.videoHeight // Scale video to match canvas height
-        });
+var webcam = new fabric.Image(webcamEl, {
+  left: 539,
+  top: 328,
+  angle: 94.5,
+  originX: 'center',
+  originY: 'center',
+  objectCaching: false,
+});
 
-        canvas.add(fabricVideo);
-        currentVideo = fabricVideo;
+canvas.add(video1);
+video1.getElement().play(); // This line plays the video associated with 'video1'
 
-        fabric.util.requestAnimFrame(function render() {
-            canvas.renderAll();
-            fabric.util.requestAnimFrame(render);
-        });
-    };
-
-    // Append the video element to the document to load video data
-    document.body.appendChild(videoEl);
+// Older browsers might not implement mediaDevices at all, so we set an empty object first
+if (navigator.mediaDevices === undefined) {
+  navigator.mediaDevices = {};
 }
 
+if (navigator.mediaDevices.getUserMedia === undefined) {
+  navigator.mediaDevices.getUserMedia = function(constraints) {
 
-document.getElementById('videoUpload').addEventListener('change', function(e) {
-    if (e.target.files && e.target.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            addVideo(e.target.result);
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    }
-});
+    // First get ahold of the legacy getUserMedia, if present
+    var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
-document.getElementById('playPauseButton').addEventListener('click', function() {
-    if (currentVideo && currentVideo.getElement()) {
-        var videoEl = currentVideo.getElement();
-        if (isPlaying) {
-            videoEl.pause();
-            this.textContent = 'Play';
-        } else {
-            videoEl.play();
-            this.textContent = 'Pause';
-        }
-        isPlaying = !isPlaying;
+    // Some browsers just don't implement it - return a rejected promise with an error
+    // to keep a consistent interface
+    if (!getUserMedia) {
+      return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
     }
-});
 
-document.getElementById('toggleLoop').addEventListener('click', function() {
-    if (currentVideo && currentVideo.getElement()) {
-        currentVideo.getElement().loop = !currentVideo.getElement().loop;
-    }
-});
+    // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+    return new Promise(function(resolve, reject) {
+      getUserMedia.call(navigator, constraints, resolve, reject);
+    });
+  }
+}
 
-document.getElementById('toggleMute').addEventListener('click', function() {
-    if (currentVideo && currentVideo.getElement()) {
-        var videoEl = currentVideo.getElement();
-        videoEl.muted = !videoEl.muted;
-    }
+// adding webcam video element
+navigator.mediaDevices.getUserMedia({video: true})
+  .then(function getWebcamAllowed(localMediaStream) {
+    webcamEl.srcObject = localMediaStream;
+
+    canvas.add(webcam);
+    webcam.moveTo(0); // move webcam element to back of zIndex stack
+    webcam.getElement().play(); // This line plays the video captured from the webcam
+  }).catch(function getWebcamNotAllowed(e) {
+    // block will be hit if user selects "no" for browser "allow webcam access" prompt
+  });
+
+fabric.util.requestAnimFrame(function render() {
+  canvas.renderAll();
+  fabric.util.requestAnimFrame(render);
 });
